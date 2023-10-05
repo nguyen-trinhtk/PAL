@@ -1,0 +1,3 @@
+when download -> guide (swiper + instructions) + skip option
+------------------------
+json structure: {'user_ip':''}
