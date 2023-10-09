@@ -1,6 +1,3 @@
-
-import React from 'react';
-import { View, Text, SafeAreaView, StyleSheet, Pressable, ScrollView, StatusBar } from 'react-native';
 import React, { useState } from 'react';
 import { TouchableOpacity, View, Text, SafeAreaView, StyleSheet, Pressable, ScrollView, Image, Dimensions } from 'react-native';
 import Swiper from 'react-native-swiper';
@@ -62,6 +59,139 @@ const HomePage = ({ navigation }) => {
                ['#157F1F', '#4CB963', '#A0EADE', '#5C6784', '#1D263B'],
                ['#2E1F27', '#854D27', '#DD7230', '#F4C95D', '#E7E393']]
 
+
+
+  const styles = StyleSheet.create({
+  welcomeContainer: {
+    top: 0,
+    width: width,
+    height: height*0.32,
+  },
+  welcomeText: {
+    color: '#002648',
+    fontSize: 40,
+    fontWeight: '800',
+    top: 100,
+    left: 30,
+  },
+  hamburger: {
+    backgroundColor: '#8DA7BF',
+    position: 'absolute',
+    left: 30,
+    top: 52,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+  },
+  avatar: {
+    backgroundColor: '#8DA7BF',
+    position: 'absolute',
+    right: 30,
+    top: 60,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+  },
+  
+  //-----------------------------------//
+  modeChoose: {
+    color: '#002648',
+    fontSize: 25,
+    fontWeight: '800',
+    top: -20,
+    marginLeft: 30,
+  },
+  modeChooseText: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    top: 25,
+  },
+  modeChooseSwiper: {
+    height: 0.1*height,
+  },
+  mcslide: {
+    backgroundColor: 'rgba(0,38,72,0.5)',
+    height: 0.1*height,
+    width: 0.9*width,
+    left: 0.05*width,
+    borderRadius: 5,
+  },
+  //-----------------------------------//
+  recentTitle: {
+    color: '#002648',
+    fontSize: 25,
+    fontWeight: '800',
+    top: 20,
+    marginLeft: 30,
+    marginBottom: 40,
+  },
+//-----------------------------------//
+featuredPaletteSwiper: {
+  top: -60,
+  height: 0.4*height,
+},
+slide: {
+  width: width,
+  alignItems: 'center',
+},
+
+image: {
+  width: 0.9*width,
+  height: 0.4*height,
+  borderRadius: 40,
+},
+
+imageTitle: {
+  width: 0.76*width,
+  color: 'white',
+  fontSize: 20,
+  fontWeight: '700',
+  top: -265,
+  left: 15,
+  zIndex:100,
+},
+
+imageContent: {
+  width: 0.76*width,
+  color: 'white',
+  fontSize: 17,
+  fontWeight: '400',
+  top: -110,
+  left: 15,
+  zIndex:100,
+},
+
+imageGradient: {
+  width: 0.85*width,
+  height: 0.2*height,
+  borderRadius: 40,
+  // zIndex: 10,
+  top: -0.2*height,
+},
+//-----------------------------------//
+bottomMenu: {
+  position: 'absolute',
+  bottom: 0,
+  left: 0,
+    right: 0,
+  backgroundColor: 'white',
+  flexDirection: 'row',
+  justifyContent: 'space-around',
+  borderTopLeftRadius: 30,
+  borderTopRightRadius: 30,
+  height: 70,
+  padding: 15,
+},
+
+menuiconactive: {
+  color: '#214D75',
+},
+
+menuicon: {
+  color: '#002648',
+}
+});
 
   function palette(num, list){
     const result = [];
@@ -165,21 +295,21 @@ const HomePage = ({ navigation }) => {
             loop={false}
           >
             <View style={styles.slide}>
-              <Image style={styles.image} source={require('./img/img.jpeg')} resizeMode="cover"/>
+              <Image style={styles.image} source={require('../img/img.jpeg')} resizeMode="cover"/>
               <View style={styles.gradient}>
                 <Text style={styles.imageTitle}>Enggaging palette</Text>
                 <Text style={styles.imageContent}>Create engaging palettes</Text>
               </View>
             </View>
             <View style={styles.slide}>
-              <Image style={styles.image} source={require('./img/img.jpeg')} resizeMode="cover"/>
+              <Image style={styles.image} source={require('../img/img.jpeg')} resizeMode="cover"/>
               <View style={styles.gradient}>
                 <Text style={styles.imageTitle}>Real-time generating</Text> 
                 <Text style={styles.imageContent}>Generate palettes from image</Text>
               </View>
             </View>
             <View style={styles.slide}>
-              <Image style={styles.image} source={require('./img/img.jpeg')} />
+              <Image style={styles.image} source={require('../img/img.jpeg')} />
               <View style={styles.gradient}>
                 <Text style={styles.imageTitle}>Deficiencies info</Text>
                 <Text style={styles.imageContent}>Understand and share values</Text>
@@ -261,6 +391,7 @@ const HomePage = ({ navigation }) => {
 
     </SafeAreaView>
   );
+  
 };
 
 export default HomePage;
