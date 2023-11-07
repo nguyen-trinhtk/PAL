@@ -1,130 +1,75 @@
-import React from 'react';
-import {View, Text, SafeAreaView, StyleSheet, Pressable, ScrollView, StatusBar} from 'react-native';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React, {useState} from 'react';
+import {View, Text, SafeAreaView, StyleSheet, Pressable, ScrollView, Dimensions} from 'react-native';
+import { FontAwesome, Foundation, Ionicons, MaterialIcons } from '@expo/vector-icons';
+import ColorPicker from 'react-native-wheel-color-picker'
 
-// function recentPalette(palettesList){
-//   var palRet = '';
-//   var colRet = '';
-//   if (palettesList){
-//     for (const palette of paletteList){
-//       for (const color in palette){
-//         colRet += (<View style={styles.recentColorBox}></View>);
-//       }
-//       palRet += (<View style={styles.recentPaletteRow}>{colRet}</View>);
-//     }
-//     return palRet;
-//   }
-//   else{
-//     return (<Text style={styles.noRecentPalette}>You have not create any palette yet!</Text>)
-//   }
-// }
+const {height} = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 
-function recentPalette(palettesList) {
-  let palRet = '';
-  if (palettesList) {
-    for (const palette of palettesList) {
-      const colRet = palette.map((color) => (
-        <View style={styles.recentColorBox}></View>
-      ));
-      palRet += <View style={styles.recentPaletteRow}>{colRet}</View>;
-    }
-    return palRet;
-  } else {
-    return (
-      <Text style={styles.noRecentPalette}>
-        You have not created any palette yet!
-      </Text>
-    );
-  }
-}
+const ColorPage = ({ navigation }) => {
+  const [color, setColor] = useState('');
 
-const HomePage = ({ navigation }) => {
-// export default Homepage = () => {
+  const onColorChange = color => {
+    setColor(color);
+  };
   return (
-    <SafeAreaView style={{flex: 1, paddingTop: StatusBar.currentHeight}}>
-      <ScrollView style={styles.scrollView}>
-        <View style={styles.curvedWelcomeRectangle}>
-          <Text style={styles.welcomeText}>Welcome back!</Text>
-          <Text style={styles.subText}>Give this a subtitle</Text>
-          <View style={styles.avatar}></View>
-        </View>
-        <View style={styles.featuredPaletteSwiper}>
-          {/* put my swiper here */}
-        </View>
-        <Text style={styles.modeChoose}>Create your own palette</Text>
-        
-
-        <Pressable onPress={() => navigation.navigate('ColorPage')}>
-          <View style={styles.fromColor}>
-            <Text style={styles.modeChooseText}>Pick a color</Text>
-          </View>
-        </Pressable>
-        <Pressable onPress={() => navigation.navigate('PhotoPage')}>
-          <View style={styles.fromPicture}>
-            <Text styles={styles.modeChooseText}>Generate from photo</Text>
-          </View>
-        </Pressable>
-        <View style={styles.recentPalettes}>
-          {recentPalette(paletteList)}
-        </View>
-        
+    <SafeAreaView>
+    <ScrollView style={{height: height}}>
+    <View style={{ marginTop: 0.1*height, width: 0.9*width, height: width, marginLeft: 0.05*width}}>
+    <ColorPicker
+          color={color}
+          onColorChange={(color) => onColorChange(color)}
+          thumbSize={20}
+          sliderSize={30}
+          noSnap={true}
+          row={false}
+          swatches={false}
+        />
+			</View>
       </ScrollView>
       <View style={styles.bottomMenu}>
           <Pressable>
-            {/* if on press go up to top */}
-            <FontAwesomeIcon icon="fa-solid fa-house" style={styles.menuicon}/>
+            <Foundation name='home' style={styles.menuiconactive} size={30}/>
           </Pressable>
           <Pressable onPress={() => navigation.navigate('ColorPage')}>
-            <FontAwesomeIcon icon="fa-solid fa-brush" />
+            <Ionicons name='color-palette' style={styles.menuicon} size={30}/>
           </Pressable>
           <Pressable onPress={() => navigation.navigate('PhotoPage')}>
-            <FontAwesomeIcon icon="fa-solid fa-image" />
+            <MaterialIcons name='image' style={styles.menuicon} size={30}/>
           </Pressable>
           <Pressable onPress={() => navigation.navigate('ProfilePage')}>
-            <FontAwesomeIcon icon="fa-solid fa-bars" />
+            <MaterialIcons name='info' style={styles.menuicon} size={30}/>
           </Pressable>
-      </View>
+        </View>
+
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  // curvedWelcomeRectangle: {
-  //   width: '100%',
-  //   height: '30%',
-  //   backgroundColor: '#eeeeee',
-  //   borderBottomLeftRadius: 50,
-  //   borderBottomRightRadius: 50,
-  // },
-  // welcomeText: {
-  //   color: 'black',
-  //   fontSize: 20,
-  //   fontWeight: '800',
-  //   top: '100%',
-  //   left: 20,
-  // },
-  // avatar: {
-  //   backgroundColor: 'gray',
-  //   right: -20,
-  //   width: 50,
-  //   height: 50,
-  //   borderRadius: 25,
-  // },
-  // subText: {
-  //   color: 'grey',
-  //   fontSize: 18,
-  //   left: 20,
-  // },
-  // scrollView: {
-  //   marginHorizontal: 20,
-  // },
-  // modeChoose: {
-  //   color: 'black',
-  //   fontSize: 20,
-  //   fontWeight: '800',
-  //   top: '100%',
-  //   left: 20,
-  // },
-})
+  
+//-----------------------------------//
+bottomMenu: {
+  position: 'absolute',
+  bottom: 0,
+  left: 0,
+    right: 0,
+  backgroundColor: 'white',
+  flexDirection: 'row',
+  justifyContent: 'space-around',
+  borderTopLeftRadius: 30,
+  borderTopRightRadius: 30,
+  height: 70,
+  padding: 15,
+},
 
-export default HomePage
+menuiconactive: {
+  color: '#214D75',
+},
+
+menuicon: {
+  color: '#002648',
+}
+});
+
+export default ColorPage;

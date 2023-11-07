@@ -297,7 +297,7 @@ menuicon: {
             <View style={styles.slide}>
               <Image style={styles.image} source={require('../img/img.jpeg')} resizeMode="cover"/>
               <View style={styles.gradient}>
-                <Text style={styles.imageTitle}>Enggaging palette</Text>
+                <Text style={styles.imageTitle}>Engaging palette</Text>
                 <Text style={styles.imageContent}>Create engaging palettes</Text>
               </View>
             </View>
@@ -311,7 +311,7 @@ menuicon: {
             <View style={styles.slide}>
               <Image style={styles.image} source={require('../img/img.jpeg')} />
               <View style={styles.gradient}>
-                <Text style={styles.imageTitle}>Deficiencies info</Text>
+                <Text style={styles.imageTitle}>Color deficiencies </Text>
                 <Text style={styles.imageContent}>Understand and share values</Text>
               </View>
             </View>
@@ -358,7 +358,7 @@ menuicon: {
             </View>
 
             <View style={styles.mcslide}>
-              <Pressable onPress={() => navigation.navigate('ColorPage')}>
+              <Pressable onPress={() => navigation.navigate('PhotoPage')}>
                 <Text style={styles.modeChooseText}>Generate from a photo</Text>
               </Pressable>
             </View>
