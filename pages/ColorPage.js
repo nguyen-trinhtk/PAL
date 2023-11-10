@@ -8,13 +8,19 @@ const {width} = Dimensions.get('window');
 
 const ColorPage = ({ navigation }) => {
   const [color, setColor] = useState('');
-
+  const black = '#100B00';
+const darkgreen = '#1D2917';
+const lightgreen = '#799B82';
+const beige = '#FDFBE3';
+const white = '#FFF';
+// function recentPale
   const onColorChange = color => {
+    
     setColor(color);
   };
   return (
-    <SafeAreaView>
-    <ScrollView style={{height: height}}>
+    <SafeAreaView style={{height: Dimensions.get('window'), backgroundColor: white}}>
+    <ScrollView style={styles.scrollView}>
     <View style={{ marginTop: 0.1*height, width: 0.9*width, height: width, marginLeft: 0.05*width}}>
     <ColorPicker
           color={color}
@@ -28,11 +34,11 @@ const ColorPage = ({ navigation }) => {
 			</View>
       </ScrollView>
       <View style={styles.bottomMenu}>
-          <Pressable>
-            <Foundation name='home' style={styles.menuiconactive} size={30}/>
+          <Pressable onPress={() => navigation.navigate('HomePage')}>
+            <Foundation name='home' style={styles.menuicon} size={30}/>
           </Pressable>
           <Pressable onPress={() => navigation.navigate('ColorPage')}>
-            <Ionicons name='color-palette' style={styles.menuicon} size={30}/>
+            <Ionicons name='color-palette' style={styles.menuiconactive} size={30}/>
           </Pressable>
           <Pressable onPress={() => navigation.navigate('PhotoPage')}>
             <MaterialIcons name='image' style={styles.menuicon} size={30}/>

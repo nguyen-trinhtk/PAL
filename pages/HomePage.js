@@ -6,7 +6,11 @@ import { FontAwesome, Foundation, Ionicons, MaterialIcons } from '@expo/vector-i
 
 const {height} = Dimensions.get('window');
 const {width} = Dimensions.get('window');
-
+const black = '#100B00';
+const darkgreen = '#1D2917';
+const lightgreen = '#799B82';
+const beige = '#FDFBE3';
+const white = '#FFF';
 // function recentPalette(palettesList) {
 //   let palRet = '';
 //   if (palettesList) {
@@ -38,7 +42,7 @@ const HomePage = ({ navigation }) => {
       <TouchableOpacity onPress={handlePress}>
       <View
         style={{
-          backgroundColor: 'white',
+          backgroundColor: white,
           borderRadius: 20,
         }}
       >
@@ -63,55 +67,38 @@ const HomePage = ({ navigation }) => {
 
   const styles = StyleSheet.create({
   welcomeContainer: {
-    top: 0,
+    top: -250,
     width: width,
     height: height*0.32,
   },
   welcomeText: {
-    color: '#002648',
+    color: black,
     fontSize: 40,
     fontWeight: '800',
-    top: 100,
+    top: 80,
     left: 30,
   },
-  hamburger: {
-    backgroundColor: '#8DA7BF',
-    position: 'absolute',
-    left: 30,
-    top: 52,
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-  },
-  avatar: {
-    backgroundColor: '#8DA7BF',
-    position: 'absolute',
-    right: 30,
-    top: 60,
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-  },
-  
   //-----------------------------------//
   modeChoose: {
-    color: '#002648',
+    color: black,
     fontSize: 25,
     fontWeight: '800',
-    top: -20,
+    top: -290,
     marginLeft: 30,
   },
   modeChooseText: {
-    color: 'white',
+    color: white,
+    fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
     top: 25,
   },
   modeChooseSwiper: {
     height: 0.1*height,
+    top: -280,
   },
   mcslide: {
-    backgroundColor: 'rgba(0,38,72,0.5)',
+    backgroundColor: lightgreen,
     height: 0.1*height,
     width: 0.9*width,
     left: 0.05*width,
@@ -119,16 +106,16 @@ const HomePage = ({ navigation }) => {
   },
   //-----------------------------------//
   recentTitle: {
-    color: '#002648',
+    color: black,
     fontSize: 25,
     fontWeight: '800',
-    top: 20,
+    top: -250,
     marginLeft: 30,
     marginBottom: 40,
   },
 //-----------------------------------//
 featuredPaletteSwiper: {
-  top: -60,
+  top: -325,
   height: 0.4*height,
 },
 slide: {
@@ -144,7 +131,7 @@ image: {
 
 imageTitle: {
   width: 0.76*width,
-  color: 'white',
+  color: white,
   fontSize: 20,
   fontWeight: '700',
   top: -265,
@@ -154,7 +141,7 @@ imageTitle: {
 
 imageContent: {
   width: 0.76*width,
-  color: 'white',
+  color: white,
   fontSize: 17,
   fontWeight: '400',
   top: -110,
@@ -175,7 +162,7 @@ bottomMenu: {
   bottom: 0,
   left: 0,
     right: 0,
-  backgroundColor: 'white',
+  backgroundColor: black,
   flexDirection: 'row',
   justifyContent: 'space-around',
   borderTopLeftRadius: 30,
@@ -185,12 +172,25 @@ bottomMenu: {
 },
 
 menuiconactive: {
-  color: '#214D75',
+  color: lightgreen,
 },
 
 menuicon: {
-  color: '#002648',
+  color: darkgreen,
+},
+backrec: {
+  width: width,
+  height: 0.3*height,
+  borderBottomLeftRadius: 30,
+  borderBottomRightRadius: 30,
+  top: 0,
+  backgroundColor: darkgreen,
+
+},
+paletteCont: {
+  top: -270,
 }
+
 });
 
   function palette(num, list){
@@ -202,7 +202,7 @@ menuicon: {
         left: 0.05*width, 
         height: 0.09*height, 
         marginBottom: 0.02*height,
-        backgroundColor: 'white',
+        backgroundColor: beige,
         borderRadius: 10,
         flexDirection: 'row',
         alignItems: 'center',
@@ -254,11 +254,10 @@ menuicon: {
   }
 
   return (
-    <SafeAreaView style={{height: Dimensions.get('window'), backgroundColor: '#E6EFF7'}}>
+    <SafeAreaView style={{height: Dimensions.get('window'), backgroundColor: white}}>
       <ScrollView style={styles.scrollView}>
+        <View style={styles.backrec}></View>
         <View style={styles.welcomeContainer}>
-          <View style={styles.hamburger}></View>
-          <View style={styles.avatar}></View>
           <Text style={styles.welcomeText}>Explore</Text>
         </View>
 
@@ -317,7 +316,7 @@ menuicon: {
             </View>
           </Swiper>
         </View>
-
+        
 
         <Text style={styles.modeChoose}>Create a palette now</Text>
         <View style={styles.modeChooseSwiper}>
@@ -371,11 +370,10 @@ menuicon: {
         </View>
 
         <Text style={styles.recentTitle}>Recent palettes</Text>
-        {palette(3, colorList)}
-        <View style={{marginTop: 20, height:60}}></View>
+        <View style={styles.paletteCont}>{palette(3, colorList)}</View>
       </ScrollView>
       <View style={styles.bottomMenu}>
-          <Pressable>
+          <Pressable onPress={() => navigation.navigate('HomePage')}>
             <Foundation name='home' style={styles.menuiconactive} size={30}/>
           </Pressable>
           <Pressable onPress={() => navigation.navigate('ColorPage')}>
