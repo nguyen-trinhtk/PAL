@@ -5,23 +5,24 @@ import ColorPicker from 'react-native-wheel-color-picker'
 
 const {height} = Dimensions.get('window');
 const {width} = Dimensions.get('window');
+const black = '#101010';
+const darkgrey = '#555555';
+const neutralgrey = '#BBBBBB';
+const lightgrey = '#DDDDDD';
+const white = '#FFF';
 
 const ColorPage = ({ navigation }) => {
-  const [color, setColor] = useState('');
-  const black = '#100B00';
-const darkgreen = '#1D2917';
-const lightgreen = '#799B82';
-const beige = '#FDFBE3';
-const white = '#FFF';
+const [color, setColor] = useState('');
+
 // function recentPale
   const onColorChange = color => {
-    
     setColor(color);
   };
   return (
     <SafeAreaView style={{height: Dimensions.get('window'), backgroundColor: white}}>
     <ScrollView style={styles.scrollView}>
-    <View style={{ marginTop: 0.1*height, width: 0.9*width, height: width, marginLeft: 0.05*width}}>
+    <Text style={styles.titleText}>Pick a Color</Text>
+    <View style={{ top: 0.1*height, width: 0.8*width, height: 0.6*height, marginLeft: 0.1*width}}>
     <ColorPicker
           color={color}
           onColorChange={(color) => onColorChange(color)}
@@ -32,6 +33,18 @@ const white = '#FFF';
           swatches={false}
         />
 			</View>
+      <Text style={{textAlign: 'center', fontSize: 20, fontWeight: '700',}}>Selected color: {color}</Text>
+      <View style={{top: height*0.1, height: 0.332*height, flexDirection: 'row', justifyContent: 'space-around'}}>
+      <Pressable onPress={() => navigation.navigate('ColorResultPage')}>
+            <Text style={{textAlign: 'center', fontSize: 20, fontWeight: '700', color: darkgrey, backgroundColor: white, borderWidth: 4, borderColor: darkgrey, width: 0.4*width, height: 0.09*height, padding: 18, borderRadius: 20,}}>Back</Text>
+      </Pressable>
+        
+        <Pressable onPress={() => navigation.navigate('ColorResultPage')}>
+            <Text style={{textAlign: 'center', fontSize: 20, fontWeight: '700', color: white, backgroundColor: darkgrey, width: 0.4*width, height: 0.09*height, padding: 18, borderRadius: 20,}}>Generate</Text>
+        </Pressable>
+        
+      </View>
+      
       </ScrollView>
       <View style={styles.bottomMenu}>
           <Pressable onPress={() => navigation.navigate('HomePage')}>
@@ -59,8 +72,8 @@ bottomMenu: {
   position: 'absolute',
   bottom: 0,
   left: 0,
-    right: 0,
-  backgroundColor: 'white',
+  right: 0,
+  backgroundColor: black,
   flexDirection: 'row',
   justifyContent: 'space-around',
   borderTopLeftRadius: 30,
@@ -70,12 +83,24 @@ bottomMenu: {
 },
 
 menuiconactive: {
-  color: '#214D75',
+  color: white,
 },
 
 menuicon: {
-  color: '#002648',
+  color: neutralgrey,
+},
+paletteCont: {
+  top: 0,
+},
+titleText: {
+  fontSize: 30,
+  fontWeight: '800',
+  top: 0.1*height,
+  left: 0.1*width,
+
 }
+
+
 });
 
 export default ColorPage;

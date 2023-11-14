@@ -6,29 +6,11 @@ import { FontAwesome, Foundation, Ionicons, MaterialIcons } from '@expo/vector-i
 
 const {height} = Dimensions.get('window');
 const {width} = Dimensions.get('window');
-const black = '#100B00';
-const darkgreen = '#1D2917';
-const lightgreen = '#799B82';
-const beige = '#FDFBE3';
+const black = '#101010';
+const darkgrey = '#555555';
+const neutralgrey = '#BBBBBB';
+const lightgrey = '#DDDDDD';
 const white = '#FFF';
-// function recentPalette(palettesList) {
-//   let palRet = '';
-//   if (palettesList) {
-//     for (const palette of palettesList) {
-//       const colRet = palette.map((color) => (
-//         <View style={styles.recentColorBox}></View>
-//       ));
-//       palRet += <View style={styles.recentPaletteRow}>{colRet}</View>;
-//     }
-//     return palRet;
-//   } else {
-//     return (
-//       <Text style={styles.noRecentPalette}>
-//         You have not created any palette yet!
-//       </Text>
-//     );
-//   }
-// }
 
 const HomePage = ({ navigation }) => {
   const SaveButton = () => {
@@ -42,7 +24,7 @@ const HomePage = ({ navigation }) => {
       <TouchableOpacity onPress={handlePress}>
       <View
         style={{
-          backgroundColor: white,
+          backgroundColor:'#f5f5f5',
           borderRadius: 20,
         }}
       >
@@ -52,7 +34,7 @@ const HomePage = ({ navigation }) => {
             padding: 5,
           }}
         >
-          <FontAwesome name="bookmark" size={28} color={isPressed ? '#FF6B66':'#ccc'}/>
+          <FontAwesome name="bookmark" size={28} color={isPressed ? '#FF6B66':neutralgrey}/>
         </View>
       </View>
     </TouchableOpacity>
@@ -67,7 +49,7 @@ const HomePage = ({ navigation }) => {
 
   const styles = StyleSheet.create({
   welcomeContainer: {
-    top: -250,
+    top: 70,
     width: width,
     height: height*0.32,
   },
@@ -75,7 +57,7 @@ const HomePage = ({ navigation }) => {
     color: black,
     fontSize: 40,
     fontWeight: '800',
-    top: 80,
+    top: 0,
     left: 30,
   },
   //-----------------------------------//
@@ -83,39 +65,43 @@ const HomePage = ({ navigation }) => {
     color: black,
     fontSize: 25,
     fontWeight: '800',
-    top: -290,
+    top: -60,
     marginLeft: 30,
   },
-  modeChooseText: {
-    color: white,
-    fontSize: 18,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    top: 25,
-  },
-  modeChooseSwiper: {
-    height: 0.1*height,
-    top: -280,
-  },
-  mcslide: {
-    backgroundColor: lightgreen,
-    height: 0.1*height,
+  modeChooseContainer: {
+    top: -60,
     width: 0.9*width,
     left: 0.05*width,
-    borderRadius: 5,
+    height: 0.2*height,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  modeChooseText: {
+    top: 40,
+    textAlign: 'center',
+    fontSize: 20,
+    fontWeight: '700',
+    color: white,
+  },
+  mcslide: {
+    backgroundColor: black,
+    height: 0.15*height,
+    width: 0.4*width,
+    borderRadius: 20,
   },
   //-----------------------------------//
   recentTitle: {
     color: black,
     fontSize: 25,
     fontWeight: '800',
-    top: -250,
+    top: -40,
     marginLeft: 30,
     marginBottom: 40,
   },
 //-----------------------------------//
 featuredPaletteSwiper: {
-  top: -325,
+  top: -90,
   height: 0.4*height,
 },
 slide: {
@@ -134,7 +120,7 @@ imageTitle: {
   color: white,
   fontSize: 20,
   fontWeight: '700',
-  top: -265,
+  top: 0,
   left: 15,
   zIndex:100,
 },
@@ -144,24 +130,17 @@ imageContent: {
   color: white,
   fontSize: 17,
   fontWeight: '400',
-  top: -110,
+  top: 0,
   left: 15,
   zIndex:100,
 },
 
-imageGradient: {
-  width: 0.85*width,
-  height: 0.2*height,
-  borderRadius: 40,
-  // zIndex: 10,
-  top: -0.2*height,
-},
 //-----------------------------------//
 bottomMenu: {
   position: 'absolute',
   bottom: 0,
   left: 0,
-    right: 0,
+  right: 0,
   backgroundColor: black,
   flexDirection: 'row',
   justifyContent: 'space-around',
@@ -172,23 +151,14 @@ bottomMenu: {
 },
 
 menuiconactive: {
-  color: lightgreen,
+  color: white,
 },
 
 menuicon: {
-  color: darkgreen,
-},
-backrec: {
-  width: width,
-  height: 0.3*height,
-  borderBottomLeftRadius: 30,
-  borderBottomRightRadius: 30,
-  top: 0,
-  backgroundColor: darkgreen,
-
+  color: neutralgrey,
 },
 paletteCont: {
-  top: -270,
+  top: 0,
 }
 
 });
@@ -198,11 +168,12 @@ paletteCont: {
     var r = 0;
     for (let i=0; i<num;i ++){
     result.push(
-      <View key={i} style={{width: 0.9*width, 
+      <View key={i} style={{width: 0.9*width,
+        top: -50,
         left: 0.05*width, 
         height: 0.09*height, 
         marginBottom: 0.02*height,
-        backgroundColor: beige,
+        backgroundColor: '#f5f5f5',
         borderRadius: 10,
         flexDirection: 'row',
         alignItems: 'center',
@@ -256,7 +227,6 @@ paletteCont: {
   return (
     <SafeAreaView style={{height: Dimensions.get('window'), backgroundColor: white}}>
       <ScrollView style={styles.scrollView}>
-        <View style={styles.backrec}></View>
         <View style={styles.welcomeContainer}>
           <Text style={styles.welcomeText}>Explore</Text>
         </View>
@@ -319,58 +289,22 @@ paletteCont: {
         
 
         <Text style={styles.modeChoose}>Create a palette now</Text>
-        <View style={styles.modeChooseSwiper}>
-        <Swiper
-            dot={
-              <View
-                style={{
-                  backgroundColor: 'rgba(255,255,255,0)',
-                  width: 7,
-                  height: 7,
-                  borderRadius: 4,
-                  marginLeft: 4,
-                  marginRight: 4
-                }}
-              />
-            }
-            activeDot={
-              <View
-                style={{
-                  backgroundColor: 'rgba(255,255,255,0)',
-                  width: 7,
-                  height: 7,
-                  borderRadius: 4,
-                  marginLeft: 4,
-                  marginRight: 4
-                }}
-              />
-            }
-            paginationStyle={{
-              bottom:10,
-            }}
-            loop={false}
-          >
+        <View style={styles.modeChooseContainer}>
             <View style={styles.mcslide}>
               <Pressable onPress={() => navigation.navigate('ColorPage')}>
-                <Text style={styles.modeChooseText}>Pick a dominant color</Text>
+                <Text style={styles.modeChooseText}>Pick a color</Text>
               </Pressable>
             </View>
 
             <View style={styles.mcslide}>
               <Pressable onPress={() => navigation.navigate('PhotoPage')}>
-                <Text style={styles.modeChooseText}>Generate from a photo</Text>
+                <Text style={styles.modeChooseText}>Pick a photo</Text>
               </Pressable>
-            </View>
-            <View style={styles.mcslide}>
-              <Pressable onPress={() => navigation.navigate('InfoPage')}>
-                <Text style={styles.modeChooseText}>Learn about color blindness</Text>
-              </Pressable>
-            </View>
-          </Swiper>
-        </View>
+            </View></View>
 
         <Text style={styles.recentTitle}>Recent palettes</Text>
         <View style={styles.paletteCont}>{palette(3, colorList)}</View>
+        <View style={{height: 0.07*height}}></View>
       </ScrollView>
       <View style={styles.bottomMenu}>
           <Pressable onPress={() => navigation.navigate('HomePage')}>
@@ -386,6 +320,7 @@ paletteCont: {
             <MaterialIcons name='info' style={styles.menuicon} size={30}/>
           </Pressable>
         </View>
+        
 
     </SafeAreaView>
   );

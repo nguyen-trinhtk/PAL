@@ -5,6 +5,7 @@ from skimage import io
 from daltonlens import simulate
 from PIL import Image
 import PIL, cv2, os
+import json
 
 def getHEXcluster(k: int, url: str, showHistogram: bool):
     img = io.imread(url)
@@ -176,4 +177,57 @@ def generateCVDs(hex):
     tritan_url = os.path.join(current_directory, 'temp-colors', str(numbercode), 'tritan.jpg')
     Image.fromarray(tritan_im).save(tritan_url)  
     tritan_hex = getHEXcluster(1, tritan_url, showHistogram=False)[0]
-    return (hex, protan_hex, deutan_hex, tritan_hex)
+    return (protan_hex, deutan_hex, tritan_hex)
+
+def adjust_luminance(hex_code, luminance_factor):
+    hex_code = hex_code.lstrip('#')
+    rgb = tuple(int(hex_code[i:i+2], 16) for i in (0, 2, 4))
+    adjusted_rgb = tuple(int(min(max(0, channel + (luminance_factor * 255)), 255)) for channel in rgb)
+    adjusted_hex_code = '#{:02x}{:02x}{:02x}'.format(*adjusted_rgb)
+    return adjusted_hex_code
+def json_save(filepath, key, value):
+    with open(filepath, 'r') as file:
+        data = json.load(file)
+    data[key] = value
+    with open(filepath, 'w') as file:
+        json.dump(data, file, indent=4)
+
+def generate_from_color(hex_input): 
+    ryb_input = RGBtoRYB(HEXtoCC(hex_input))
+    lum_og_1 = adjust_luminance(hex_input, 0.4)
+    lum_og_2 = adjust_luminance(hex_input, 0.8)
+    comp = CCtoHEX(RYBtoRGB(complimentary(ryb_input)))
+    lum_com = adjust_luminance(comp, 0.8)
+    result = [hex_input, lum_og_1, lum_og_2, comp, lum_com]
+    path = os.path.join(current_directory, '0-json/color.json')
+    json_save(path, 'normal', result)
+    return result
+
+def get_cvds(hex_list, suffix):
+    protan = []
+    deutan = []
+    tritan = []
+    for hex in hex_list: 
+        result = generateCVDs(hex)
+        protan.append(result[0])
+        deutan.append(result[1])
+        tritan.append(result[2])
+    path = os.path.join(current_directory, suffix)
+    json_save(path, 'protan', protan)
+    json_save(path, 'deutan', deutan)
+    json_save(path, 'tritan', tritan)
+
+def color_result(hex_input):
+    normal = generate_from_color(hex_input)
+    get_cvds(normal, '0-json/color.json')
+
+def photo_result(img_url):
+    normal = getHEXcluster(5, img_url, False)
+    path = os.path.join(current_directory, '0-json/photo.json')
+    json_save(path, 'normal', normal)
+    get_cvds(normal, '0-json/photo.json')
+
+color_result('#293810')
+photo_result('C:/Users/ADMIN/Documents/myfolder/GitHub/PAL/image-request/upload.jpg')
+
+    
