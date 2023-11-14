@@ -7,7 +7,7 @@
 <p>This app includes two parts: the front end and the back end. I designed the app's interface with Figma, then coded with React Native and prototyped with Expo Go. For the back end, I used different algorithms as follows: </p>
 <ul>
 <li>Color conversion between HEX and RGB and between RGB and RYB</li>
-<li>Palette generation from a color: Monochromatic, Complementary, Analogous, Triadic, and square tetradic</li>
+<li>Palette generation from a color: Monochromatic, Complementary, Analogous, and Triadic</li>
 <li>Palette generation from a photo: k-mean clustering</li>
 <li>Color vision deficiencies demonstration</li>
 </ul>
