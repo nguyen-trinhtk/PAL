@@ -1,4 +1,4 @@
-<h1>PAL - your palette generator that picks colors friendly for color vision deficiencies.</h1>
+<h1>PAL - palette generator that picks colors friendly for colorblind people.</h1>
 
 https://github.com/nguyen-trinhtk/PAL/assets/125171883/6363c13f-d77f-4d28-867f-26d892499a30
 
