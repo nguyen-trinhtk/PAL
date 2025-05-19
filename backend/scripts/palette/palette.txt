@@ -1,0 +1,2 @@
+Hardcoded palette generation first, make sure to check for contrast
+If everything else is finished will make a ML model (which is prolly year2/3)

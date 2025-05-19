@@ -123,3 +123,12 @@ class Color:
         lms = np.dot(Color.xyzToLms, xyz)
         return lms.tolist()
     
+    def getLuminance(self):
+        r, g, b = self.linearize()
+        return 0.2126 * r + 0.7152 * g + 0.0722 * b
+    
+    def contrastRatio(self, other):
+        L1, L2 = sorted([self.getLuminance(), other.getLuminance()], reverse=True)
+        return (L1 + 0.05) / (L2 + 0.05)
+
+    
