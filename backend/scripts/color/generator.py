@@ -5,113 +5,127 @@ from palette import Palette
 def rotateHue(h, angle):
     return (h + angle) % 360
 
-def monochromatic(color):
-    h, s, l = color.toHSL()
-    lMod = l % 20
-    palette = Palette([color])
-    for i in range(5):
-        currentL = 20*i + lMod
-        if currentL == l:
-            continue
-        currentColor = Color()
-        currentColor.setFromHSL((h, s, currentL))
-        palette.addColor(currentColor)
-    palette.sortByLuminance()
-    return palette
+def monochromatic(color, numColors=5, minContrast=4.5, step=15):
+    h, s, _ = color.toHSL()
+    resultPalette = Palette([color])
+    contrast = minContrast
+    while len(resultPalette.getPalette()) < numColors and contrast > 1.0:
+        resultPalette = Palette([color])
+        for l in range(10, 101, step):
+            newColor = Color()
+            newColor.setFromHSL((h, s, l))
+            if all(newColor.contrastRatio(existing) >= contrast for existing in resultPalette.getPalette()):
+                resultPalette.addColor(newColor)
+                if len(resultPalette.getPalette()) >= numColors:
+                    break
+        contrast -= 0.1
+    resultPalette.sortByLuminance()
+    return resultPalette
+
+def analogus(color, numColors=5, minContrast=4.5, step=20):
+    h, s, _ = color.toHSL()
+    resultPalette = Palette([color])
+    contrast = minContrast
+    while len(resultPalette.getPalette()) < numColors and contrast > 1.0:
+        resultPalette = Palette([color])
+        for l in range(10, 101, step):
+            leftColor = Color()
+            leftColor.setFromHSL((rotateHue(h, -30), s, l))
+            rightColor = Color()
+            rightColor.setFromHSL((rotateHue(h, 30), s, l))
+            if all(leftColor.contrastRatio(existing) >= contrast for existing in resultPalette.getPalette()):
+                resultPalette.addColor(leftColor)
+            if len(resultPalette.getPalette()) >= numColors:
+                break
+            if all(rightColor.contrastRatio(existing) >= contrast for existing in resultPalette.getPalette()):
+                resultPalette.addColor(rightColor)
+            if len(resultPalette.getPalette()) >= numColors:
+                break
+        contrast -= 0.1
+    resultPalette.sortByLuminance()
+    return resultPalette
 
 
-# currently 2-4 colors
-def analogus(color):
-    h, s, l = color.toHSL()
-    palette = Palette([color])
-    left = Color()
-    right = Color()
-    left.setFromHSL((rotateHue(h, -30), s, l))
-    right.setFromHSL((rotateHue(h, 30), s, l))
-    palette.addColor(left)
-    palette.addColor(right)
-    return palette
+def triadic(color, numColors=5, minContrast=4.5, step=15):
+    h, s, _ = color.toHSL()
+    resultPalette = Palette([color])
+    contrast = minContrast
+    while len(resultPalette.getPalette()) < numColors and contrast > 1.0:
+        resultPalette = Palette([color])
+        for l in range(10, 101, step):
+            leftColor = Color()
+            leftColor.setFromHSL((rotateHue(h, -120), s, l))
+            rightColor = Color()
+            rightColor.setFromHSL((rotateHue(h, 120), s, l))
+            if all(leftColor.contrastRatio(existing) >= contrast for existing in resultPalette.getPalette()):
+                resultPalette.addColor(leftColor)
+            if len(resultPalette.getPalette()) >= numColors:
+                break
+            if all(rightColor.contrastRatio(existing) >= contrast for existing in resultPalette.getPalette()):
+                resultPalette.addColor(rightColor)
+            if len(resultPalette.getPalette()) >= numColors:
+                break
+        contrast -= 0.1
+    resultPalette.sortByLuminance()
+    return resultPalette
 
-def triadic(color):
-    h, s, l = color.toHSL()
-    palette = Palette([color])
-    left = Color()
-    right = Color()
-    left.setFromHSL((rotateHue(h, -120), s, l))
-    right.setFromHSL((rotateHue(h, 120), s, l))
-    palette.addColor(left)
-    palette.addColor(right)
-    return palette
-
-# currently 3-4 colors
-def complementary(color):
-    h, s, l = color.toHSL()
-    palette = Palette([color])
-    comp = Color()
-    comp.setFromHSL((rotateHue(h, 180), s, l))
-    palette.addColor(comp)
-    return palette
-
-def tetradic(color):
-    h, s, l = color.toHSL()
-    palette = Palette([color])
-    one = Color()
-    two = Color()
-    three = Color()
-    one.setFromHSL((rotateHue(h, 60), s, l))
-    two.setFromHSL((rotateHue(h, 180), s, l))
-    three.setFromHSL((rotateHue(h, 240), s, l))
-    palette.addColor(one)
-    palette.addColor(two)
-    palette.addColor(three)
-    return palette
-
-def splitComplementary(color):
-    h, s, l = color.toHSL()
-    palette = Palette([color])
-    one = Color()
-    two = Color()
-    three = Color()
-    one.setFromHSL((rotateHue(h, 30), s, l))
-    two.setFromHSL((rotateHue(h, 180), s, l))
-    three.setFromHSL((rotateHue(h, -150), s, l))
-    palette.addColor(one)
-    palette.addColor(two)
-    palette.addColor(three)
-    return palette
-
-color = Color(255, 4, 65)
-palette = splitComplementary(color)
-palette.plot()
+def complementary(color, numColors=5, minContrast=4.5, step=17):
+    h, s, _ = color.toHSL()
+    resultPalette = Palette([color])
+    contrast = minContrast
+    while len(resultPalette.getPalette()) < numColors and contrast > 1.0:
+        resultPalette = Palette([color])
+        for l in range(10, 101, step):
+            comp = Color()
+            comp.setFromHSL((rotateHue(h, 180), s, l))
+            if all(comp.contrastRatio(existing) >= contrast for existing in resultPalette.getPalette()):
+                resultPalette.addColor(comp)
+                if len(resultPalette.getPalette()) >= numColors:
+                    break
+        contrast -= 0.1
+    resultPalette.sortByLuminance()
+    return resultPalette
 
 
-'''
-import numpy as np
-from color import Color
-from palette import Palette
+def tetradic(color, numColors=5, minContrast=4.5, step=15):
+    h, s, _ = color.toHSL()
+    resultPalette = Palette([color])
+    contrast = minContrast
+    hues = [60, 180, 240]
+    while len(resultPalette.getPalette()) < numColors and contrast > 1.0:
+        resultPalette = Palette([color])
+        for l in range(10, 101, step):
+            for hueShift in hues:
+                c = Color()
+                c.setFromHSL((rotateHue(h, hueShift), s, l))
+                if all(c.contrastRatio(existing) >= contrast for existing in resultPalette.getPalette()):
+                    resultPalette.addColor(c)
+                    if len(resultPalette.getPalette()) >= numColors:
+                        break
+            if len(resultPalette.getPalette()) >= numColors:
+                break
+        contrast -= 0.1
+    resultPalette.sortByLuminance()
+    return resultPalette
 
-def rotateHue(h, angle):
-    return (h + angle) % 360
+def splitComplementary(color, numColors=5, minContrast=4.5, step=20):
+    h, s, _ = color.toHSL()
+    resultPalette = Palette([color])
+    contrast = minContrast
+    hues = [30, 180, -150]
+    while len(resultPalette.getPalette()) < numColors and contrast > 1.0:
+        resultPalette = Palette([color])
+        for l in range(10, 101, step):
+            for hueShift in hues:
+                c = Color()
+                c.setFromHSL((rotateHue(h, hueShift), s, l))
+                if all(c.contrastRatio(existing) >= contrast for existing in resultPalette.getPalette()):
+                    resultPalette.addColor(c)
+                    if len(resultPalette.getPalette()) >= numColors:
+                        break
+            if len(resultPalette.getPalette()) >= numColors:
+                break
+        contrast -= 0.1
+    resultPalette.sortByLuminance()
+    return resultPalette
 
-def generateHighContrastPalette(base_color, count=5):
-    h, s, l = base_color.toHSL()
-    palette = Palette([base_color])
-    
-    # Generate evenly spaced hues around the circle
-    hue_step = 360 // count
-    base_hues = [(rotateHue(h, i * hue_step)) for i in range(1, count)]
-    
-    # Programmatically vary saturation and luminance
-    for i, new_h in enumerate(base_hues):
-        new_s = 100 - (i * 15 % 50)  # Vary saturation between 50–100
-        new_l = 30 + (i * 20 % 40)   # Vary luminance between 30–70
-
-        color = Color()
-        color.setFromHSL((new_h, new_s, new_l))
-        
-        # Optional: check perceptual contrast with base_color here
-
-        palette.addColor(color)
-    palette.sortByLuminance()
-    return palette
-'''

@@ -88,14 +88,14 @@ class Color:
         self.validateColor()
         return self.__red, self.__green, self.__blue
 
-    def linearize(self): # sRGB to linear RGB
+    def linearize(self):  # sRGB to linear RGB
         r = self.__red / 255.0
         g = self.__green / 255.0
         b = self.__blue / 255.0
         r = np.where(r <= 0.03928, r / 12.92, ((r + 0.055) / 1.055) ** 2.4)
         g = np.where(g <= 0.03928, g / 12.92, ((g + 0.055) / 1.055) ** 2.4)
         b = np.where(b <= 0.03928, b / 12.92, ((b + 0.055) / 1.055) ** 2.4)
-        return r, g, b
+        return float(r), float(g), float(b)
 
     def toLMS(self):
         r, g, b = self.linearize()
@@ -111,4 +111,4 @@ class Color:
         L1, L2 = sorted([self.getLuminance(), other.getLuminance()], reverse=True)
         return (L1 + 0.05) / (L2 + 0.05)
 
-    
+

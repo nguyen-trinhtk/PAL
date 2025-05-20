@@ -41,6 +41,10 @@ class Palette:
                 self.__contrastRatioDict.update({(color1, color2):cRatio})
         return self.__contrastRatioDict   
     
+    def getContrastList(self):
+        self.checkContrast()
+        return list(self.__contrastRatioDict.values())
+    
     def getMeanContrast(self):
         self.checkContrast()
         return np.mean(list(self.__contrastRatioDict.values()))
