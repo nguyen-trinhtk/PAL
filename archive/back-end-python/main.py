@@ -6,8 +6,9 @@ from daltonlens import simulate
 from PIL import Image
 import PIL, cv2, os
 import json
+import timeit
 
-def getHEXcluster(k: int, url: str, showHistogram: bool):
+def getHEXcluster(url: str, showHistogram=False, k=5):
     img = io.imread(url)
     img_init = img.copy()
     img = img.reshape((img.shape[0] * img.shape[1], img.shape[2]))
@@ -227,7 +228,8 @@ def photo_result(img_url):
     json_save(path, 'normal', normal)
     get_cvds(normal, '0-json/photo.json')
 
-color_result('#293810')
-photo_result('C:/Users/ADMIN/Documents/myfolder/GitHub/PAL/image-request/upload.jpg')
+def test():
+    print(getHEXcluster('/Users/nguyentrinh/Documents/GitHub/PAL/archive/image-request/upload.jpg'))
 
-    
+runtime = timeit.timeit("test()", globals=globals(), number=1)
+print(f"Runtime: {runtime:.4f} seconds")

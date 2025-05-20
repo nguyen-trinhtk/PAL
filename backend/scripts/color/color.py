@@ -32,6 +32,9 @@ class Color:
         self.__blue = blue
         self.validateColor()
 
+    def __str__(self):
+        return self.toHex()
+    
     def validateColor(self):
         if self.__red < 0 or self.__red > 255:
             raise ValueError("Red value must be between 0 and 255")
