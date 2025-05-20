@@ -1,4 +1,5 @@
 import numpy as np
+import colorsys
 class Color:
     rgbToXyz = np.array([[0.4124, 0.3576, 0.1805],
                         [0.2126, 0.7152, 0.0722],
@@ -69,47 +70,23 @@ class Color:
         self.__blue = int(hexColor[5:7], 16)
         self.validateColor()
 
-    def toRYB(self):
-        red, green, blue = self.getRed(), self.getGreen(), self.getBlue()
-        white = min(red, green, blue)
-        red, green, blue = red - white, green - white, blue - white
-        maxGray = max(red, green, blue)
-        yellow = min(red, green)
-        red, green = red - yellow, green - yellow
-        if blue and green:
-            blue, green = blue/2, green/2
-        yellow, blue = yellow + green, blue + green
-        maxYellow = max(red, yellow, blue)
-        if maxYellow:
-            n = maxGray/maxYellow
-            red, yellow, blue = red*n, yellow*n, blue*n
-        red, yellow, blue = red + white, yellow + white, blue + white
-        red, yellow, blue = max(0, min(255, round(red))), max(0, min(255, round(yellow))), max(0, min(255, round(blue)))
-        return red, yellow, blue
-
-    def setFromRYB(self, rybList):
-        if len(rybList) != 3 or not all(isinstance(c, (int, float)) for c in rybList):
-            raise ValueError("Input must be a list of three numeric values (red, yellow, blue).")
-        red, yellow, blue = rybList
-        white = min(red, yellow, blue)
-        red, yellow, blue = red - white, yellow - white, blue - white
-        maxYellow = max(red, yellow, blue)
-        green = min(yellow, blue)
-        yellow, blue = yellow - green, blue - green
-
-        if blue and green:
-            blue, green = blue * 2.0, green * 2.0
-
-        red, green = red + yellow, green + yellow
-        maxGray = max(red, green, blue)
-        if maxGray:
-            n = maxYellow / maxGray
-            red, green, blue = red * n, green * n, blue * n
-        red, green, blue = red + white, green + white, blue + white
-        self.__red = max(0, min(255, round(red)))
-        self.__green = max(0, min(255, round(green)))
-        self.__blue = max(0, min(255, round(blue)))
+    def toHSL(self):
+        h, l, s = colorsys.rgb_to_hls(self.__red / 255.0, self.__green / 255.0, self.__blue / 255.0)
+        return round(h * 360), round(s*100), round(l*100)
+    
+    def setFromHSL(self, hslList):
+        h, s, l = hslList[0], hslList[1], hslList[2]
+        if not (0 <= h <= 360 and 0 <= s <= 100 and 0 <= l <= 100):
+            raise ValueError("HSL values must be in the ranges: H(0-360), S(0-100), L(0-100)")
+        h /= 360.0
+        s /= 100.0
+        l /= 100.0
+        r, g, b = colorsys.hls_to_rgb(h, l, s)
+        self.__red = round(r * 255)
+        self.__green = round(g * 255)
+        self.__blue = round(b * 255)
         self.validateColor()
+        return self.__red, self.__green, self.__blue
 
     def linearize(self): # sRGB to linear RGB
         r = self.__red / 255.0
