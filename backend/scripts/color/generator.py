@@ -5,7 +5,7 @@ from palette import Palette
 def rotateHue(h, angle):
     return (h + angle) % 360
 
-def monochromatic(color, numColors=5, minContrast=4.5, step=15):
+def monochromatic(color, numColors=5, minContrast=4.5, step=22):
     h, s, _ = color.toHSL()
     resultPalette = Palette([color])
     contrast = minContrast
@@ -22,7 +22,7 @@ def monochromatic(color, numColors=5, minContrast=4.5, step=15):
     resultPalette.sortByLuminance()
     return resultPalette
 
-def analogus(color, numColors=5, minContrast=4.5, step=20):
+def analogus(color, numColors=5, minContrast=4.5, step=18):
     h, s, _ = color.toHSL()
     resultPalette = Palette([color])
     contrast = minContrast
@@ -46,7 +46,7 @@ def analogus(color, numColors=5, minContrast=4.5, step=20):
     return resultPalette
 
 
-def triadic(color, numColors=5, minContrast=4.5, step=15):
+def triadic(color, numColors=5, minContrast=4.5, step=18):
     h, s, _ = color.toHSL()
     resultPalette = Palette([color])
     contrast = minContrast
@@ -69,7 +69,7 @@ def triadic(color, numColors=5, minContrast=4.5, step=15):
     resultPalette.sortByLuminance()
     return resultPalette
 
-def complementary(color, numColors=5, minContrast=4.5, step=17):
+def complementary(color, numColors=5, minContrast=4.5, step=22):
     h, s, _ = color.toHSL()
     resultPalette = Palette([color])
     contrast = minContrast
@@ -87,7 +87,7 @@ def complementary(color, numColors=5, minContrast=4.5, step=17):
     return resultPalette
 
 
-def tetradic(color, numColors=5, minContrast=4.5, step=15):
+def tetradic(color, numColors=5, minContrast=4.5, step=18):
     h, s, _ = color.toHSL()
     resultPalette = Palette([color])
     contrast = minContrast
@@ -108,7 +108,7 @@ def tetradic(color, numColors=5, minContrast=4.5, step=15):
     resultPalette.sortByLuminance()
     return resultPalette
 
-def splitComplementary(color, numColors=5, minContrast=4.5, step=20):
+def splitComplementary(color, numColors=5, minContrast=4.5, step=16):
     h, s, _ = color.toHSL()
     resultPalette = Palette([color])
     contrast = minContrast
